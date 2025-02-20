@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Processing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section {
+            padding: 20px;
+            background: white;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Data Processing</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="data-processing.html">Data Processing</a></li>
+            <li><a href="model-training.html">Model Training</a></li>
+            <li><a href="monitoring.html">Monitoring</a></li>
+            <li><a href="optimization.html">Optimization</a></li>
+            <li><a href="insights.html">Insights</a></li>
+        </ul>
+    </nav>
+    <section>
+        <h2>Handling Missing Data</h2>
+        <p>Missing data can cause disruptions in streaming. To address this, KNN imputation is used to predict and fill missing values based on the nearest available data points.</p>
+        <pre>
+from river.impute import KNNImputer
+
+data_stream = ...  # Streaming data generator
+imputer = KNNImputer()
+processed_stream = (imputer.learn_one(x).transform_one(x) for x in data_stream)
+        </pre>
+    </section>
+    <section>
+        <h2>Outlier Detection</h2>
+        <p>Outliers can distort results. Isolation Forest is used for real-time anomaly detection by identifying points that appear isolated in the dataset.</p>
+        <pre>
+from river.anomaly import IsolationForest
+
+iso_forest = IsolationForest()
+anomalies = [iso_forest.learn_one(x).score_one(x) for x in data_stream if iso_forest.score_one(x) > threshold]
+        </pre>
+    </section>
+    <section>
+        <h2>Normalization</h2>
+        <p>To ensure that data remains within a consistent range, Standard Scaler is used to normalize data streams dynamically.</p>
+        <pre>
+from river.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+normalized_stream = (scaler.learn_one(x).transform_one(x) for x in data_stream)
+        </pre>
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            alert("Welcome to Data Processing Page");
+        });
+    </script>
+</body>
+</html>

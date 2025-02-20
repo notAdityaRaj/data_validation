@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section {
+            padding: 20px;
+            background: white;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Optimization</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="data-processing.html">Data Processing</a></li>
+            <li><a href="model-training.html">Model Training</a></li>
+            <li><a href="monitoring.html">Monitoring</a></li>
+            <li><a href="optimization.html">Optimization</a></li>
+            <li><a href="insights.html">Insights</a></li>
+        </ul>
+    </nav>
+    <section>
+        <h2>Bayesian Optimization</h2>
+        <p>Bayesian Optimization is a sequential model-based approach for optimizing hyperparameters. It efficiently finds the best parameter values by balancing exploration and exploitation.</p>
+        <pre>
+from skopt import gp_minimize
+
+# Define the objective function
+
+def objective(params):
+    model = AdaptiveRandomForestClassifier(n_estimators=params[0], max_depth=params[1])
+    return -evaluate_model(model)  # Negative because we minimize in gp_minimize
+
+search_space = [(10, 100), (5, 20)]  # Range of parameters
+result = gp_minimize(objective, search_space, n_calls=20)
+        </pre>
+    </section>
+    <section>
+        <h2>Improving Performance</h2>
+        <p>Fine-tuning hyperparameters through Bayesian Optimization enhances accuracy while maintaining computational efficiency. The algorithm intelligently selects the best configurations to maximize performance.</p>
+    </section>
+    <section>
+        <h2>Code Example</h2>
+        <p>The following code demonstrates Bayesian Optimization to find the best hyperparameters dynamically.</p>
+        <pre>
+from skopt.space import Integer
+from skopt import Optimizer
+
+search_space = [Integer(10, 100, name='n_estimators'), Integer(5, 20, name='max_depth')]
+opt = Optimizer(search_space, "GP")
+
+for _ in range(20):
+    params = opt.ask()
+    loss = objective(params)
+    opt.tell(params, loss)
+
+print("Optimized Parameters:", opt.Xi[np.argmin(opt.yi)])
+        </pre>
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            alert("Welcome to Optimization Page");
+        });
+    </script>
+</body>
+</html>

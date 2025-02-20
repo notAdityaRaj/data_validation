@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section {
+            padding: 20px;
+            background: white;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Monitoring</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="data-processing.html">Data Processing</a></li>
+            <li><a href="model-training.html">Model Training</a></li>
+            <li><a href="monitoring.html">Monitoring</a></li>
+            <li><a href="optimization.html">Optimization</a></li>
+            <li><a href="insights.html">Insights</a></li>
+        </ul>
+    </nav>
+    <section>
+        <h2>Quality Metrics Monitoring</h2>
+        <p>Tracking quality metrics such as accuracy, precision, and recall helps in evaluating the model's performance in real-time.</p>
+        <pre>
+from river.metrics import Accuracy, Precision, Recall
+
+accuracy = Accuracy()
+precision = Precision()
+recall = Recall()
+
+for x, y in data_stream:
+    y_pred = model.predict_one(x)
+    accuracy.update(y, y_pred)
+    precision.update(y, y_pred)
+    recall.update(y, y_pred)
+    print(f'Accuracy: {accuracy.get()}, Precision: {precision.get()}, Recall: {recall.get()}')
+        </pre>
+    </section>
+    <section>
+        <h2>Drift Detection</h2>
+        <p>Page-Hinkley test is used to detect concept drift, ensuring the model adapts to changes in the data distribution.</p>
+        <pre>
+from river.drift import PageHinkley
+
+ph = PageHinkley()
+
+for x, y in data_stream:
+    y_pred = model.predict_one(x)
+    ph.update(y_pred == y)
+    if ph.change_detected:
+        print("Alert: Concept drift detected!")
+        # Trigger retraining mechanism
+        </pre>
+    </section>
+    <section>
+        <h2>Alerts</h2>
+        <p>When model performance drops below a defined threshold, alerts are generated to prompt immediate action.</p>
+        <pre>
+threshold_accuracy = 0.85
+
+for x, y in data_stream:
+    y_pred = model.predict_one(x)
+    accuracy.update(y, y_pred)
+    if accuracy.get() < threshold_accuracy:
+        print("Alert: Accuracy dropped below threshold!")
+        </pre>
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            alert("Welcome to Monitoring Page");
+        });
+    </script>
+</body>
+</html>

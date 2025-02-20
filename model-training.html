@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Training</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section {
+            padding: 20px;
+            background: white;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Model Training</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="data-processing.html">Data Processing</a></li>
+            <li><a href="model-training.html">Model Training</a></li>
+            <li><a href="monitoring.html">Monitoring</a></li>
+            <li><a href="optimization.html">Optimization</a></li>
+            <li><a href="insights.html">Insights</a></li>
+        </ul>
+    </nav>
+    <section>
+        <h2>Naïve Bayes Classifier</h2>
+        <p>Naïve Bayes is a simple yet powerful classification algorithm based on Bayes' Theorem. It assumes that features are independent given the class label.</p>
+        <pre>
+from river.naive_bayes import GaussianNB
+from river.metrics import Accuracy
+
+nb_model = GaussianNB()
+metric = Accuracy()
+
+for x, y in data_stream:
+    y_pred = nb_model.predict_one(x)
+    metric.update(y, y_pred)
+    nb_model.learn_one(x, y)
+        </pre>
+    </section>
+    <section>
+        <h2>Adaptive Random Forest Classifier</h2>
+        <p>Adaptive Random Forest is an advanced ensemble learning method that adapts to evolving data streams by dynamically adjusting tree structures.</p>
+        <ul>
+            <li>Maintains multiple decision trees for robustness.</li>
+            <li>Adapts to concept drift in real-time data streams.</li>
+            <li>Balances accuracy and computational efficiency.</li>
+        </ul>
+        <pre>
+from river.ensemble import AdaptiveRandomForestClassifier
+
+arf = AdaptiveRandomForestClassifier()
+
+for x, y in data_stream:
+    arf.learn_one(x, y)
+    y_pred = arf.predict_one(x)
+        </pre>
+    </section>
+    <section>
+        <h2>Live Model Training and Accuracy Tracking</h2>
+        <p>Tracking model accuracy during training helps identify performance trends and detect potential issues early.</p>
+        <pre>
+from river.metrics import Accuracy
+
+accuracy_metric = Accuracy()
+
+for x, y in data_stream:
+    y_pred = arf.predict_one(x)
+    accuracy_metric.update(y, y_pred)
+    print(f'Current Accuracy: {accuracy_metric.get()}')
+        </pre>
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            alert("Welcome to Model Training Page");
+        });
+    </script>
+</body>
+</html>
